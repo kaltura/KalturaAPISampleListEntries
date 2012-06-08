@@ -17,9 +17,10 @@
 				"bServerSide": true,
 				"sAjaxSource": "./getlist.php",
 				"aoColumnDefs": [ 
-				  { "bSortable": false, "aTargets": [ 0 ] },
-				  { "bSortable": false, "aTargets": [ 2 ] },
-				  { "bSortable": false, "aTargets": [ 4 ] }
+				  { "bSortable": false, "aTargets": [ 1 ] },
+				  { "bSortable": false, "aTargets": [ 3 ] },
+				  { "bSortable": false, "aTargets": [ 5 ] },
+				  { "bSortable": false, "aTargets": [ 6 ] }
 				],
 				"fnServerParams": function ( aoData ) {
 				  aoData.push( { "name": "statusIn", "value": $.map($("input[name='filterstatus[braket]']:checked"),function(a){return a.value;}) } );
@@ -46,10 +47,29 @@
 			});
 		});
 	</script>
+	<style>
+		.type {
+			padding: 5px 30px 5px 0;
+		}
+		.type-1 {
+			background: transparent url(icons/icon_film.gif) no-repeat center right;
+		}
+		.type-2 {
+			background: transparent url(icons/icon_pic.gif) no-repeat center right;
+		}
+		.type-5 {
+			background: transparent url(icons/icon_music.gif) no-repeat center right;
+		}
+		.downloadlink {
+			padding: 5px 42px 5px 0;
+			background: transparent url(icons/icon_download.png) no-repeat center right;
+		}
+	</style>
+	<!-- Icons from: http://pooliestudios.com/projects/iconize/ -->
 </head>
 <body>
 <article style="display:block;width:90%;margin: 0px auto;">
-	<h1>Litsing Kaltura Entries...</h1>
+	<h1>Litsing Kaltura <span style="font-style:italic;">Media</span> Entries...</h1>
 	<p>This sample shows how to use jQuery datatables and Kaltura's PHP API Client Library to create a searchable and sortable list of Kaltura Media Entries.</p>
 	<p style="font-size: 14px; background: #F2F4D5 url(http://cdnknowledge.kaltura.com//sites/all/themes/kaltura_theme/tinymce_styles/images/note_icons.png) no-repeat left center; padding-left: 80px; min-height: 56px; display: block; padding-top: 5px; margin-top: 15px; margin-bottom: 15px;">NOTE: Make sure to set your partner id and admin secret in getlist.php</p>
 	<div id="boxes" style="width:20%;float:left;">
@@ -85,11 +105,13 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="dataTable" id="dataTable">
 			<thead>
 				<tr>
+					<th>Type</th>
 					<th>Entry Id</th>
 					<th width="40%">Title</th>
 					<th width="40%">Description</th>
 					<th>Updated</th>
 					<th>Owner</th>
+					<th>Download</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -99,11 +121,13 @@
 			</tbody>
 			<tfoot>
 				<tr>
+					<th>Type</th>
 					<th>Entry Id</th>
 					<th>Title</th>
 					<th>Description</th>
 					<th>Updated</th>
 					<th>Owner</th>
+					<th>Download</th>
 				</tr>
 			</tfoot>
 		</table>
