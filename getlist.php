@@ -62,6 +62,7 @@
 	/* 
 	 ORDERING
 		- Check KalturaMediaEntryOrderBy for more info.
+		- in Kaltura thumbnailUrl can't be sorted
 		- in Kaltura: MEDIATYPE_ASC / MEDIATYPE_DESC
 		- in Kaltura id can't be sorted
 		- in Kaltura: NAME_ASC / NAME_DESC
@@ -72,7 +73,7 @@
 	   iSortCol_  - The column id of the column to order
 	   sSortDir_  - Should the column be desc or asc
 	*/
-	$aColumns = array( 'mediaType', 'id', 'name', 'description', 'updatedAt', 'userId', 'download' );
+	$aColumns = array( 'thumbnailUrl', 'mediaType', 'id', 'name', 'description', 'updatedAt', 'userId', 'download' );
 	if ( isset( $_GET['iSortCol_0'] ) )
 	{
 		for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
@@ -107,13 +108,22 @@
 	$codesample .= PHP_EOL . '$table[] = array("mediaType", "id", "name", "description", "updatedAt", "userId", "download");';
 	$codesample .= PHP_EOL . 'foreach ($filteredListResult->objects as $entry) {';
 	$codesample .= PHP_EOL . '		$row = array();';
+	$codesample .= PHP_EOL . '		//to learn more about thumbnail api see: http://knowledge.kaltura.com/kaltura-thumbnail-api';
+	$codesample .= PHP_EOL . '		//for the default thumbnail, can also use: $entry->thumbnailUrl;';
+	$codesample .= PHP_EOL . '		$row[] = \'<img src="http://cdn.kaltura.com/p/\'.$partnerId.\'/thumbnail/entry_id/\'.$entry->id.\'/width/50/height/50/type/1/quality/100" />\'; ';
 	$codesample .= PHP_EOL . '		$row[] = $entry->mediaType;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->id;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->name;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->description;';
 	$codesample .= PHP_EOL . '		$row[] = gmdate("m.d.y", $entry->updatedAt);';
 	$codesample .= PHP_EOL . '		$row[] = $entry->userId;';
-	$codesample .= PHP_EOL . '		$row[] = \'<a href="http://www.kaltura.com/p/\'.$partnerId.\'/sp/0/playManifest/entryId/\'.$entry->id.\'/format/url/flavorParamId/0" target="_blank">Download</a>\';';
+	$codesample .= PHP_EOL . '		if ($entry->mediaType == KalturaMediaType::VIDEO || $entry->mediaType == KalturaMediaType::AUDIO) {';
+	$codesample .= PHP_EOL . '			//to learn more about getting download url - http://knowledge.kaltura.com/faq/how-retrieve-download-or-streaming-url-using-api-calls';
+	$codesample .= PHP_EOL . '			$downloadUrl = \'http://www.kaltura.com/p/\'. $partnerId .\'/sp/0/playManifest/entryId/\'. $entry->id .\'/format/url/flavorParamId/0\';';
+	$codesample .= PHP_EOL . '			$row[] = \'<a href="\'.$downloadUrl.\'" target="_blank">Download</a>\';';
+	$codesample .= PHP_EOL . '		} else {';
+	$codesample .= PHP_EOL . '			$row[] = \'<a href="\'.$entry->dataUrl.\'" target="_blank" class="downloadlink"></a>\';';
+	$codesample .= PHP_EOL . '		}';
 	$codesample .= PHP_EOL . '		$table[] = $row;';
 	$codesample .= PHP_EOL . '}';
 	$codesample .= PHP_EOL . 'return $table;';
@@ -133,14 +143,21 @@
 	
 	foreach ($filteredListResult->objects as $entry) {
 		$row = array();
+		//to learn more about thumbnail api see: http://knowledge.kaltura.com/kaltura-thumbnail-api
+		//for the default thumbnail, can also use: $entry->thumbnailUrl;
+		$row[] = '<img src="http://cdn.kaltura.com/p/'.$partnerId.'/thumbnail/entry_id/'.$entry->id.'/width/50/height/50/type/1/quality/100" />'; 
 		$row[] = '<span class="type type-'.$entry->mediaType.'"></span>';
 		$row[] = $entry->id;
 		$row[] = $entry->name;
 		$row[] = prepareDescription($entry->description);
 		$row[] = gmdate("m.d.y", $entry->updatedAt);
 		$row[] = tep_rewrite_email($entry->userId);
-		//to learn more about getting download url - http://knowledge.kaltura.com/faq/how-retrieve-download-or-streaming-url-using-api-calls
-		$row[] = '<a href="http://www.kaltura.com/p/'.$partnerId.'/sp/0/playManifest/entryId/'.$entry->id.'/format/url/flavorParamId/0" target="_blank" class="downloadlink"></a>';
+		if ($entry->mediaType == KalturaMediaType::VIDEO || $entry->mediaType == KalturaMediaType::AUDIO) {
+			//to learn more about getting download url - http://knowledge.kaltura.com/faq/how-retrieve-download-or-streaming-url-using-api-calls
+			$row[] = '<a href="http://www.kaltura.com/p/'.$partnerId.'/sp/0/playManifest/entryId/'.$entry->id.'/format/url/flavorParamId/0" target="_blank" class="downloadlink"></a>';
+		} else {
+			$row[] = '<a href="'.$entry->dataUrl.'" target="_blank" class="downloadlink"></a>';
+		}
 		$output['aaData'][] = $row;
 	}
 	

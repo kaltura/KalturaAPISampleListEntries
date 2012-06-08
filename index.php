@@ -17,10 +17,11 @@
 				"bServerSide": true,
 				"sAjaxSource": "./getlist.php",
 				"aoColumnDefs": [ 
-				  { "bSortable": false, "aTargets": [ 1 ] },
-				  { "bSortable": false, "aTargets": [ 3 ] },
-				  { "bSortable": false, "aTargets": [ 5 ] },
-				  { "bSortable": false, "aTargets": [ 6 ] }
+				  { "bSortable": false, "aTargets": [ 0 ] },
+				  { "bSortable": false, "aTargets": [ 2 ] },
+				  { "bSortable": false, "aTargets": [ 4 ] },
+				  { "bSortable": false, "aTargets": [ 6 ] },
+				  { "bSortable": false, "aTargets": [ 7 ] }
 				],
 				"fnServerParams": function ( aoData ) {
 				  aoData.push( { "name": "statusIn", "value": $.map($("input[name='filterstatus[braket]']:checked"),function(a){return a.value;}) } );
@@ -69,7 +70,7 @@
 </head>
 <body>
 <article style="display:block;width:90%;margin: 0px auto;">
-	<h1>Litsing Kaltura <span style="font-style:italic;">Media</span> Entries...</h1>
+	<h1>Listing Kaltura <span style="font-style:italic;">Media</span> Entries...</h1>
 	<p>This sample shows how to use jQuery datatables and Kaltura's PHP API Client Library to create a searchable and sortable list of Kaltura Media Entries.</p>
 	<p style="font-size: 14px; background: #F2F4D5 url(http://cdnknowledge.kaltura.com//sites/all/themes/kaltura_theme/tinymce_styles/images/note_icons.png) no-repeat left center; padding-left: 80px; min-height: 56px; display: block; padding-top: 5px; margin-top: 15px; margin-bottom: 15px;">NOTE: Make sure to set your partner id and admin secret in getlist.php</p>
 	<div id="boxes" style="width:20%;float:left;">
@@ -105,6 +106,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="dataTable" id="dataTable">
 			<thead>
 				<tr>
+					<th></th>
 					<th>Type</th>
 					<th>Entry Id</th>
 					<th width="40%">Title</th>
@@ -121,6 +123,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
+					<th></th>
 					<th>Type</th>
 					<th>Entry Id</th>
 					<th>Title</th>
