@@ -69,6 +69,7 @@
 	<!-- Icons from: http://pooliestudios.com/projects/iconize/ -->
 </head>
 <body>
+<a href="https://github.com/kaltura/KalturaAPISampleListEntries" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 <article style="display:block;width:90%;margin: 0px auto;">
 	<h1>Listing Kaltura <span style="font-style:italic;">Media</span> Entries...</h1>
 	<p>This sample shows how to use jQuery datatables and Kaltura's PHP API Client Library to create a searchable and sortable list of Kaltura Media Entries.</p>
