@@ -12,6 +12,9 @@
 	<link href="js/loadmask/jquery.loadmask.css" rel="stylesheet" type="text/css" />
 	<!-- Page Style -->
 	<style type="text/css">
+		.notep {
+			font-size: 14px; background: #F2F4D5 url(http://cdnknowledge.kaltura.com//sites/all/themes/kaltura_theme/tinymce_styles/images/note_icons.png) no-repeat left center; padding-left: 80px; min-height: 56px; display: block; padding-top: 5px; margin-top: 15px; margin-bottom: 15px;
+		}
 		.type {
 			padding: 5px 30px 5px 0;
 		}
@@ -37,6 +40,8 @@
 	<!-- Page Scripts -->
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function() {
+			var configset = <?php require_once('kalturaconf.php'); echo '"'.$adminSecret.'"'; ?>;
+			if (configset != 'your-api-admin-secret') $('.notep').hide();
 			$('#dataTable').dataTable( {
 				"bJQueryUI": true,
 				"bProcessing": true,
@@ -99,8 +104,9 @@
 <a href="https://github.com/kaltura/KalturaAPISampleListEntries" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 <article style="display:block;width:90%;margin: 0px auto;">
 	<h1>Listing Kaltura <span style="font-style:italic;">Media</span> Entries...</h1>
-	<p>This sample shows how to use jQuery datatables and Kaltura's PHP API Client Library to create a searchable and sortable list of Kaltura Media Entries.</p>
-	<p style="font-size: 14px; background: #F2F4D5 url(http://cdnknowledge.kaltura.com//sites/all/themes/kaltura_theme/tinymce_styles/images/note_icons.png) no-repeat left center; padding-left: 80px; min-height: 56px; display: block; padding-top: 5px; margin-top: 15px; margin-bottom: 15px;">NOTE: Make sure to set your partner id and admin secret in getlist.php</p>
+	<p>This sample shows how to use jQuery datatables and Kaltura's PHP API Client Library to create a searchable and sortable list of Kaltura Media Entries.
+	<br />The <a href="#sourcecodeexample">source code example below</a> the table, will automatically be updated according to the filters and sort conditions you set.</p>
+	<p class="notep">NOTE: Make sure to set your partner id and admin secret in getlist.php</p>
 <div id="tableandfilters">
 	<div id="boxes" style="width:20%;float:left;display:block;">
 		<a href="#" onClick="toggleCheckboxes('#status_boxes');"><span class="openindicator">+</span> Filter by Kaltura Entry Status:</a>
@@ -181,6 +187,7 @@
 	</div>
 	<div style="clear:both;"></div>
 	<div style="margin-top:40px;">
+		<a name="sourcecodeexample"></a>
 		<h2>The source code used to list the entries:</h2>
 		<div id="sourcecode" class="brush: js;">
 		</div>
