@@ -5,8 +5,8 @@
 	<title>List Kaltura Media Entries, PHP Sample</title>
 	<!-- Style Includes -->
 	<style type="text/css" media="screen">
-			@import "js/datatables/media/css/jquery.dataTables_themeroller.css";
-			@import "js/datatables/media/css/pepper-grinder/jquery-ui-1.8.21.custom.css";
+		@import "js/datatables/media/css/jquery.dataTables_themeroller.css";
+		@import "js/datatables/media/css/pepper-grinder/jquery-ui-1.8.21.custom.css";
 	</style>
 	<link rel="stylesheet" href="js/prettycheckboxes/css/prettyCheckboxes.css" type="text/css" media="screen" title="prettyComment main stylesheet" charset="utf-8" />
 	<link href="js/loadmask/jquery.loadmask.css" rel="stylesheet" type="text/css" />
@@ -94,7 +94,6 @@
 			});
 		}
 	</script>
-	<!-- Icons from: http://pooliestudios.com/projects/iconize/ -->
 </head>
 <body>
 <a href="https://github.com/kaltura/KalturaAPISampleListEntries" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
@@ -186,8 +185,16 @@
 		<div id="sourcecode" class="brush: js;">
 		</div>
 	</div>
-	<p style="margin-top:80px;font-style:italic;">Kaltura PHP API Client Library - <a href="http://knowledge.kaltura.com/introduction-kaltura-client-libraries" target="_blank">http://knowledge.kaltura.com/introduction-kaltura-client-libraries</a></p>
-	<p style="font-style:italic;">jQuery DataTables - <a href="http://datatables.net" target="_blank">http://datatables.net/</a></p>
+	<div style="margin-top:80px;font-style:italic;">
+		<h2>Recognitions:</h2>
+		<ul>
+			<li>Kaltura PHP API Client Library - <a href="http://knowledge.kaltura.com/introduction-kaltura-client-libraries" target="_blank">http://knowledge.kaltura.com/introduction-kaltura-client-libraries</a></li>
+			<li>jQuery DataTables - <a href="http://datatables.net" target="_blank">http://datatables.net/</a></li>
+			<li>jQuery plugin to mask DOM elements during loading - <a href="http://datatables.net" target="_blank">http://code.google.com/p/jquery-loadmask/</a></li>
+			<li>Icons - <a href="http://pooliestudios.com/projects/iconize/" target="_blank">http://pooliestudios.com/projects/iconize/</a></li>
+			<li>prettyCheckboxes - <a href="http://www.no-margin-for-errors.com/projects/prettycheckboxes/" target="_blank">http://www.no-margin-for-errors.com/projects/prettycheckboxes/</a></li>
+		</ul>
+	</div>
 </article>
 </body>
 </html>
