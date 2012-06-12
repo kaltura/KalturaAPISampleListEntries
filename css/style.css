@@ -1,0 +1,61 @@
+body {
+	text-align: justify;
+	font-size: 14px;
+	line-height: 24px;
+	font-family: "Trebuchet MS", Helvetica, Sans-Serif;
+}
+h1 { font-size:2em; }
+.notep {
+	font-size: 14px; background: #F2F4D5 url(http://cdnknowledge.kaltura.com//sites/all/themes/kaltura_theme/tinymce_styles/images/note_icons.png) no-repeat left center; padding-left: 80px; min-height: 56px; display: block; padding-top: 5px; margin-top: 15px; margin-bottom: 15px;
+}
+.type {
+	padding: 5px 30px 5px 0;
+}
+.type-1 {
+	background: transparent url(icons/icon_film.gif) no-repeat center right;
+}
+.type-2 {
+	background: transparent url(icons/icon_pic.gif) no-repeat center right;
+}
+.type-5 {
+	background: transparent url(icons/icon_music.gif) no-repeat center right;
+}
+.downloadlink {
+	padding: 5px 42px 5px 0;
+	background: transparent url(icons/icon_download.png) no-repeat center right;
+}
+.accordian {
+	width: 240px;
+}
+.accordian ul {
+	padding: 0;
+	margin: 0;
+	background-color: #F5F4F2;
+	border: 1px solid #ccc;
+}
+.accordian li {
+	list-style-type: none;
+	padding: 0 5px;
+}
+.accordian .dimension {
+	margin-top:10px;
+	height: 380px;
+}	
+.accordian .even, .accordian .odd {
+	font-weight: bold;
+	height: 27px;
+	padding-top: 3px;
+	padding-left: 10px;
+}	
+.accordian .even {
+	border: 1px solid #d8d8d8;
+	background-color: #ececec;
+}	
+.accordian .odd {
+	border: 1px solid #d8d8d8;
+	background-color: #ececec;
+}
+.accordian .selected {
+	background-color: #484848;
+	color:white;
+}
