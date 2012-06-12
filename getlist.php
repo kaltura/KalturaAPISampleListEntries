@@ -26,9 +26,7 @@
 
   
 	require_once('php5/KalturaClient.php');
-	$adminSecret = 'your-api-admin-secret';
-	$partnerId = 000; //your partner id
-	$userId = 'listentriestool';
+	require_once('kalturaconf.php');
 	$config = new KalturaConfiguration($partnerId);
 	$config->serviceUrl = 'http://www.kaltura.com';
 	$client = new KalturaClient($config);
@@ -98,7 +96,11 @@
 		$filter->statusIn = $_GET['statusIn'];
 		$codesample .= PHP_EOL . '$filter->statusIn = "' . $_GET['statusIn'] . '";';
 	}
-	
+	//mediaTypeIn - See http://www.kaltura.com/api_v3/testmeDoc/index.php?object=KalturaMediaType
+	if ( isset($_GET['mediaTypeIn']) && $_GET['mediaTypeIn'] != "" ) {
+		$filter->mediaTypeIn = $_GET['mediaTypeIn'];
+		$codesample .= PHP_EOL . '$filter->mediaTypeIn = "' . $_GET['mediaTypeIn'] . '";';
+	}
 	// Execute the search (list) action
 	$filteredListResult = $client->media->listAction($filter, $pager);
 	$codesample .= PHP_EOL . '$filteredListResult = $client->media->listAction($filter, $pager);';
