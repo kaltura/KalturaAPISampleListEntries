@@ -55,10 +55,49 @@
 			while (match = search.exec(query))
 			   urlParams[decode(match[1])] = decode(match[2]);
 		})();
-		
-		function jsCallbackReady(objectId){
-			window.kdp = document.getElementById(objectId);
-			kdp.addJsListener("playerUpdatePlayhead", 'startSeekPlayer');
+				
+		function showPlayer() {
+			/*var embedCode='<div id="videoPlayerContainer"><object id="myVideoPlayer" name="myVideoPlayer" type="application/x-shockwave-flash" allowFullScreen="true" allowNetworking="all" allowScriptAccess="always" height="333" width="400" bgcolor="#000000" xmlns:dc="http://purl.org/dc/terms/" xmlns:media="http://search.yahoo.com/searchmonkey/media/" rel="media:video" resource="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'" data="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'"><param name="allowFullScreen" value="true" /><param name="allowNetworking" value="all" /><param name="allowScriptAccess" value="always" /><param name="bgcolor" value="#000000" /><param name="flashVars" value="externalInterfaceDisabled=false&autoPlay=true" /> <param name="movie" value="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'" /></object></div>' +
+			'<div style="display:none" id="sharingcontrols">Share Start at: <span style="margin-right: 10px;" id="videotime"></span>' +
+			'<a id="tweetbtn" class="sb small glossy gradient light-blue twitter">Twitter</a>' +
+			'<a id="facebookbtn" class="sb small glossy gradient blue facebook">Facebook</a></div>';*/
+			
+			var embedCode='<div id="kdpwrapper" style="width:400px;height:333px;"></div>' +
+			'<div style="display:none" id="sharingcontrols">Share Start at: <span style="margin-right: 10px;" id="videotime"></span>' +
+			'<a id="tweetbtn" class="sb small glossy gradient light-blue twitter">Twitter</a>' +
+			'<a id="facebookbtn" class="sb small glossy gradient blue facebook">Facebook</a></div>';
+			
+			jQuery.fancybox(embedCode, { 
+				'height':333+10,
+				'width':400,
+				'scrolling':'no',
+				'autoDimensions':'false',
+				'afterShow': function (){
+					var uniqid = +new Date();
+					var kdpId = 'kdptarget'+uniqid;
+					$('#kdpwrapper').html('<div id="'+kdpId+'" style="width:400px;height:333px;"></div>');
+					kWidget.embed({
+						'targetId': kdpId,
+						'wid': '_'+partnerId,
+						'uiconf_id' : uiConfId,
+						'entry_id' : urlParams['entry_id'],
+						'flashvars':{
+							'externalInterfaceDisabled' : false,
+							'autoPlay' : true
+						},
+						'readyCallback': function( playerId ){
+							//console.log('readycalled');
+							window.kdp = $('#'+playerId).get(0);
+							kdp.addJsListener("playerUpdatePlayhead", 'startSeekPlayer');
+						}
+					});
+				},
+				'beforeClose': function () {
+							//console.log('deleting...');
+							kWidget.destroy(window.kdp);
+							delete(window.kdp);
+						}
+			});
 		}
 		
 		function startSeekPlayer() {
@@ -68,20 +107,6 @@
 			kdp.removeJsListener("playerUpdatePlayhead", 'startSeekPlayer');
 			kdp.addJsListener("playerUpdatePlayhead", 'updateTwitterFBSeekTime');
 			$('#sharingcontrols').show();
-		}
-
-		function showPlayer() {
-			var embedCode='<div id="videoPlayerContainer"><object id="myVideoPlayer" name="myVideoPlayer" type="application/x-shockwave-flash" allowFullScreen="true" allowNetworking="all" allowScriptAccess="always" height="333" width="400" bgcolor="#000000" xmlns:dc="http://purl.org/dc/terms/" xmlns:media="http://search.yahoo.com/searchmonkey/media/" rel="media:video" resource="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'" data="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'"><param name="allowFullScreen" value="true" /><param name="allowNetworking" value="all" /><param name="allowScriptAccess" value="always" /><param name="bgcolor" value="#000000" /><param name="flashVars" value="externalInterfaceDisabled=false&autoPlay=true" /> <param name="movie" value="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'" /></object></div>' +
-			'<div style="display:none" id="sharingcontrols">Share Start at: <span style="margin-right: 10px;" id="videotime"></span>' +
-			'<a id="tweetbtn" class="sb small glossy gradient light-blue twitter">Twitter</a>' +
-			'<a id="facebookbtn" class="sb small glossy gradient blue facebook">Facebook</a></div>';
-			
-			$.fancybox(embedCode, { 
-				'height':333+10,
-				'width':400,
-				'scrolling':'no',
-				'autoDimensions':'false'
-			});
 		}
 		
 		function updateTwitterFBSeekTime() {
