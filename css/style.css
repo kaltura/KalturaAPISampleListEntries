@@ -12,17 +12,17 @@ h1 { font-size:2em; }
 	padding: 5px 30px 5px 0;
 }
 .type-1 {
-	background: transparent url(icons/icon_film.gif) no-repeat center right;
+	background: transparent url(../icons/icon_film.gif) no-repeat center right;
 }
 .type-2 {
-	background: transparent url(icons/icon_pic.gif) no-repeat center right;
+	background: transparent url(../icons/icon_pic.gif) no-repeat center right;
 }
 .type-5 {
-	background: transparent url(icons/icon_music.gif) no-repeat center right;
+	background: transparent url(../icons/icon_music.gif) no-repeat center right;
 }
 .downloadlink {
 	padding: 5px 42px 5px 0;
-	background: transparent url(icons/icon_download.png) no-repeat center right;
+	background: transparent url(../icons/icon_download.png) no-repeat center right;
 }
 .accordian {
 	width: 240px;

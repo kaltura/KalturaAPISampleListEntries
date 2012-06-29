@@ -1,3 +1,4 @@
+<?php require_once('kalturaconf.php') ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -8,18 +9,111 @@
 		@import "js/datatables/media/css/jquery.dataTables_themeroller.css";
 		@import "js/datatables/media/css/pepper-grinder/jquery-ui-1.8.21.custom.css";
 	</style>
+	<link rel="stylesheet" href="js/fancyBox/jquery.fancybox.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="js/prettycheckboxes/css/prettyCheckboxes.css" type="text/css" media="screen" title="prettyComment main stylesheet" charset="utf-8" />
 	<link href="js/loadmask/jquery.loadmask.css" rel="stylesheet" type="text/css" />
 	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="css/social-buttons.css" rel="stylesheet" type="text/css" />
+	
 	<!-- Script Includes -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript" language="javascript" src="js/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="js/prettycheckboxes/js/prettyCheckboxes.js" charset="utf-8" ></script>
 	<script type="text/javascript" src="js/loadmask/jquery.loadmask.min.js"></script>
+	<script type="text/javascript" src="js/fancyBox/jquery.fancybox.js"></script>
+	<script type="text/javascript" src="js/jquery.popupWindow.js"></script>
+	<script src="http://html5.kaltura.org/js"></script>
 	<!-- Page Scripts -->
 	<script type="text/javascript" charset="utf-8">
+
+		partnerId=<?php echo $partnerId ?>;
+		uiConfId=<?php echo $uiConfId ?>;
+		
+		mw.setConfig( 'KalturaSupport.LeadWithHTML5', true );
+		
+		function toHHMMSS (inseconds) {
+			sec_numb    = parseInt(inseconds);
+			var hours   = Math.floor(sec_numb / 3600);
+			var minutes = Math.floor((sec_numb - (hours * 3600)) / 60);
+			var seconds = sec_numb - (hours * 3600) - (minutes * 60);
+
+			if (hours   < 10) {hours   = "0"+hours;}
+			if (minutes < 10) {minutes = "0"+minutes;}
+			if (seconds < 10) {seconds = "0"+seconds;}
+			var time    = (hours == "00" ? "" : hours + ':') + minutes+':'+seconds;
+			return time;
+		}
+
+		var urlParams = {};
+		(function () {
+			var match,
+				pl     = /\+/g,  // Regex for replacing addition symbol with a space
+				search = /([^&=]+)=?([^&]*)/g,
+				decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+				query  = window.location.search.substring(1);
+
+			while (match = search.exec(query))
+			   urlParams[decode(match[1])] = decode(match[2]);
+		})();
+		
+		function jsCallbackReady(objectId){
+			window.kdp = document.getElementById(objectId);
+			kdp.addJsListener("playerUpdatePlayhead", 'startSeekPlayer');
+		}
+		
+		function startSeekPlayer() {
+			if (parseInt(urlParams['vid_sec']) > 0) {
+				kdp.sendNotification('doSeek', urlParams['vid_sec']);
+			}
+			kdp.removeJsListener("playerUpdatePlayhead", 'startSeekPlayer');
+			kdp.addJsListener("playerUpdatePlayhead", 'updateTwitterFBSeekTime');
+			$('#sharingcontrols').show();
+		}
+
+		function showPlayer() {
+			var embedCode='<div id="videoPlayerContainer"><object id="myVideoPlayer" name="myVideoPlayer" type="application/x-shockwave-flash" allowFullScreen="true" allowNetworking="all" allowScriptAccess="always" height="333" width="400" bgcolor="#000000" xmlns:dc="http://purl.org/dc/terms/" xmlns:media="http://search.yahoo.com/searchmonkey/media/" rel="media:video" resource="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'" data="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'"><param name="allowFullScreen" value="true" /><param name="allowNetworking" value="all" /><param name="allowScriptAccess" value="always" /><param name="bgcolor" value="#000000" /><param name="flashVars" value="externalInterfaceDisabled=false&autoPlay=true" /> <param name="movie" value="http://www.kaltura.com/index.php/kwidget/wid/_'+partnerId+'/uiconf_id/'+uiConfId+'/entry_id/'+urlParams['entry_id']+'" /></object></div>' +
+			'<div style="display:none" id="sharingcontrols">Share Start at: <span style="margin-right: 10px;" id="videotime"></span>' +
+			'<a id="tweetbtn" class="sb small glossy gradient light-blue twitter">Twitter</a>' +
+			'<a id="facebookbtn" class="sb small glossy gradient blue facebook">Facebook</a></div>';
+			
+			$.fancybox(embedCode, { 
+				'height':333+10,
+				'width':400,
+				'scrolling':'no',
+				'autoDimensions':'false'
+			});
+		}
+		
+		function updateTwitterFBSeekTime() {
+			var cuePoint = Math.floor(kdp.evaluate("{video.player.currentTime}"));
+			$('#videotime').text(toHHMMSS(cuePoint));
+			var winPath = window.location.origin+window.location.pathname;
+			var cuepointPath = encodeURIComponent(winPath + "?entry_id=" + urlParams['entry_id'] + "&vid_sec=" + cuePoint);
+			var text2share = encodeURIComponent("Check out this awesom moment!");
+			var tweetUrl = 'http://twitter.com/share?url='+cuepointPath+'&text='+text2share+'&via=kaltura';
+			var fbShareUrl = 'http://www.facebook.com/sharer.php?u='+cuepointPath+'&t='+text2share;
+			$('#tweetbtn').popupWindow({windowURL:tweetUrl, 
+										windowName:'tweeter window',
+										height:300, 
+										width:600, 
+										resizable:false,
+										scrollbars:false,
+										centerBrowser:true
+									});
+			$('#facebookbtn').popupWindow({windowURL:fbShareUrl, 
+										windowName:'facebook window',
+										height:300, 
+										width:600, 
+										resizable:false,
+										scrollbars:false,
+										centerBrowser:true
+									});
+		}
+
 		$(document).ready(function() {
-			var configset = <?php require_once('kalturaconf.php'); echo '"'.$adminSecret.'"'; ?>;
+	
+			
+			var configset = <?php echo '"'.$adminSecret.'"'; ?>;
 			if (configset != 'your-api-admin-secret') $('.notep').hide();
 			$('#dataTable').dataTable( {
 				"bJQueryUI": true,
@@ -39,25 +133,72 @@
 				},
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
 					$.getJSON( sSource, aoData, function (json) { 
+						string=''
+						for(prop in json){
+							string+=prop+':'+json[prop]
+						}
 						$("#sourcecode").html(json.codesample); //print the source code to the page before printing the table
 						fnCallback(json); //finalize dataTables run
 					} );
+				},
+				
+				"fnRowCallback":function( nRow, aData, iDisplayIndex, iDisplayIndexFull ){
+					var thing = 0;
+					var times = new Array();	
+					var i = 0;
+					var timer = null;
+					//Perhaps a call back function should be set here to be performed at the very end
+					$(nRow).children('td:first').children('img').mouseover(function(){	
+						var that = this;
+						if (aData[8] > 10) {
+							timer = setInterval( function () {
+								if (i < 10 && times.length == 10 ) {
+									that.src = times[i++].src;
+								} else {
+									i=0;
+								}	
+							},250);
+							
+							if (times.length < 10) {
+								var timeUnit = aData[8] / 10;
+								var timeUnits = 0;
+								for (i; i < 10; i++) {
+									timeUnits=Math.floor(timeUnit * i);
+									times.push(new Image());
+									times[i].setAttribute('src', 'http://cdn.kaltura.com/p/'+partnerId+'/thumbnail/entry_id/'+aData[2]+'/width/50/height/50/type/1/quality/100/vid_sec/'+timeUnits);
+								}
+								i=0;
+							}
+						}
+					});
+					$(nRow).children('td:first').children('img').mouseout(function() {
+						clearTimeout(timer);
+					});
+					$(nRow).children('td:first').children('img').click(function() {
+						urlParams['entry_id'] = aData[2];
+						urlParams['vid_sec'] = 0;
+						showPlayer();
+					});
 				}
 			} );
-			$('#dataTable').dataTable().bind('processing', 
-				function (e, oSettings, bShow) {
-					if (bShow) {
-						ajaxIndicator();
-					} else {
-						ajaxIndicator(true);
-					}
-				});
+			$('#dataTable').dataTable().bind('processing', function (e, oSettings, bShow) {
+				if (bShow) {
+					ajaxIndicator();
+				} else {
+					ajaxIndicator(true);
+				}
+			});
+
 			$('#boxes input[type=checkbox]').prettyCheckboxes({'display':'list'});
 			$("input[type='checkbox']").change(function () {
 				var oTable = $('#dataTable').dataTable();
 				oTable.fnDraw();
 			});
-		} );
+			
+			if (urlParams['entry_id']) {
+				showPlayer();
+			}
+		});
 		
 		function ajaxIndicator(hide) {
 			if (!hide)
