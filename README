@@ -1,0 +1,10 @@
+This is a sample project showing how to perform basic Kaltura media.list API calls, share a link to a point in video on twitter/facebook and use the thumbnail API to create an animated thumbnail showing a preview of the video.
+
+To set this project, clone it to a local folder, and add a new file named: kalturaconf.php
+in kalturaconf.php add the following:
+<?php
+// get partner id and admin secret from your account integration settings: http://www.kaltura.com/index.php/kmc/kmc4#account|integration
+$adminSecret = 'your-api-admin-secret';
+$partnerId = 000; //your partner id
+$uiConfId = 000; //a uiconf id to a player from your account: http://www.kaltura.com/index.php/kmc/kmc4#studio|playersList
+$userId = 'listentriestool'; //this should be set to whatever user you'd like
