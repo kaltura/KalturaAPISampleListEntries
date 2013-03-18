@@ -1,7 +1,7 @@
 <?php
 require_once('php5/KalturaClient.php');
-$adminSecret = 'b47cd50fad6d869b8d9ec0b706d2c07a';
-$partnerId = 224962;
+$adminSecret = 'YOUR_KMC_ADMIN_SECRET'; //Your ADMIN API Secret from KMC>Settings>Integration Settings
+$partnerId = 00000; //Your partner Id from KMC>Settings>Integration Settings
 $userId = 'listentriestool';
 $config = new KalturaConfiguration($partnerId);
 $config->serviceUrl = 'http://www.kaltura.com';
