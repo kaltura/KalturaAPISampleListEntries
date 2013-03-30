@@ -133,8 +133,8 @@
 		$(document).ready(function() {
 	
 			
-			var configset = <?php echo '"'.$adminSecret.'"'; ?>;
-			if (configset != 'your-api-admin-secret') $('.notep').hide();
+			var configset = <?php echo ($adminSecret != 'your-api-admin-secret' ? 1 : 0); ?>;
+            if (configset) $('.notep').hide();
 			$('#dataTable').dataTable( {
 				"bJQueryUI": true,
 				"bProcessing": true,
