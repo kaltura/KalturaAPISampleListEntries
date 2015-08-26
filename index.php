@@ -22,7 +22,7 @@
 	<script type="text/javascript" src="js/loadmask/jquery.loadmask.min.js"></script>
 	<script type="text/javascript" src="js/fancyBox/jquery.fancybox.js"></script>
 	<script type="text/javascript" src="js/jquery.popupWindow.js"></script>
-	<script src="http://html5.kaltura.org/js"></script>
+	<script src="https://cdnapisec.kaltura.com/html5/html5lib/v2.34/mwEmbedLoader.php"></script>
 	<!-- Page Scripts -->
 	<script type="text/javascript" charset="utf-8">
 
@@ -57,6 +57,7 @@
 		})();
 				
 		function showPlayer() {
+			
 			var embedCode='<div id="kdpwrapper" style="width:400px;height:333px;"></div>' +
 			'<div style="display:none" id="sharingcontrols">Share Start at: <span style="margin-right: 10px;" id="videotime"></span>' +
 			'<a id="tweetbtn" class="sb small glossy gradient light-blue twitter">Twitter</a>' +
@@ -110,8 +111,8 @@
 			var winPath = window.location.origin+window.location.pathname;
 			var cuepointPath = encodeURIComponent(winPath + "?entry_id=" + urlParams['entry_id'] + "&vid_sec=" + cuePoint);
 			var text2share = encodeURIComponent("Check out this awesom moment!");
-			var tweetUrl = 'http://twitter.com/share?url='+cuepointPath+'&text='+text2share+'&via=kaltura';
-			var fbShareUrl = 'http://www.facebook.com/sharer.php?u='+cuepointPath+'&t='+text2share;
+			var tweetUrl = 'https://twitter.com/share?url='+cuepointPath+'&text='+text2share+'&via=kaltura';
+			var fbShareUrl = 'https://www.facebook.com/sharer.php?u='+cuepointPath+'&t='+text2share;
 			$('#tweetbtn').popupWindow({windowURL:tweetUrl, 
 										windowName:'tweeter window',
 										height:300, 
@@ -134,7 +135,7 @@
 	
 			
 			var configset = <?php echo ($adminSecret != 'your-api-admin-secret' ? 1 : 0); ?>;
-            if (configset) $('.notep').hide();
+			if (configset) $('.notep').hide();
 			$('#dataTable').dataTable( {
 				"bJQueryUI": true,
 				"bProcessing": true,
@@ -185,7 +186,7 @@
 								for (i; i < 10; i++) {
 									timeUnits=Math.floor(timeUnit * i);
 									times.push(new Image());
-									times[i].setAttribute('src', 'http://cdn.kaltura.com/p/'+partnerId+'/thumbnail/entry_id/'+aData[2]+'/width/50/height/50/type/1/quality/100/vid_sec/'+timeUnits);
+									times[i].setAttribute('src', 'https://cdnapisec.kaltura.com/p/'+partnerId+'/thumbnail/entry_id/'+aData[2]+'/width/50/height/50/type/1/quality/100/vid_sec/'+timeUnits);
 								}
 								i=0;
 							}
@@ -340,9 +341,9 @@
 	<div style="margin-top:80px;font-style:italic;">
 		<h2>Recognitions:</h2>
 		<ul>
-			<li>Kaltura PHP API Client Library - <a href="http://knowledge.kaltura.com/introduction-kaltura-client-libraries" target="_blank">http://knowledge.kaltura.com/introduction-kaltura-client-libraries</a></li>
-			<li>jQuery DataTables - <a href="http://datatables.net" target="_blank">http://datatables.net/</a></li>
-			<li>jQuery plugin to mask DOM elements during loading - <a href="http://datatables.net" target="_blank">http://code.google.com/p/jquery-loadmask/</a></li>
+			<li>Kaltura PHP API Client Library - <a href="https://knowledge.kaltura.com/introduction-kaltura-client-libraries" target="_blank">https://knowledge.kaltura.com/introduction-kaltura-client-libraries</a></li>
+			<li>jQuery DataTables - <a href="https://datatables.net" target="_blank">https://datatables.net/</a></li>
+			<li>jQuery plugin to mask DOM elements during loading - <a href="https://datatables.net" target="_blank">https://code.google.com/p/jquery-loadmask/</a></li>
 			<li>Icons - <a href="http://pooliestudios.com/projects/iconize/" target="_blank">http://pooliestudios.com/projects/iconize/</a></li>
 			<li>prettyCheckboxes - <a href="http://www.no-margin-for-errors.com/projects/prettycheckboxes/" target="_blank">http://www.no-margin-for-errors.com/projects/prettycheckboxes/</a></li>
 			<li>JQuery Accordion Menu - <a href="http://www.lateralcode.com/jquery-accordion-menu/" target="_blank">http://www.lateralcode.com/jquery-accordion-menu/</a></li>

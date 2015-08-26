@@ -28,7 +28,7 @@
 	require_once('php5/KalturaClient.php');
 	require_once('kalturaconf.php');
 	$config = new KalturaConfiguration($partnerId);
-	$config->serviceUrl = 'http://www.kaltura.com';
+	$config->serviceUrl = 'https://www.kaltura.com';
 	$client = new KalturaClient($config);
 	$ks = $client->generateSession($adminSecret, $userId, KalturaSessionType::ADMIN, $partnerId);
 	$client->setKs($ks);
@@ -41,7 +41,7 @@
 				'$partnerId = 000; //your partner id' . PHP_EOL .
 				'$userId = \'listentriestool\'; //this can be the logged-in admin user for tracking/auditing purposes' . PHP_EOL .
 				'$config = new KalturaConfiguration($partnerId);' . PHP_EOL .
-				'$config->serviceUrl = \'http://www.kaltura.com\';' . PHP_EOL .
+				'$config->serviceUrl = \'https://www.kaltura.com\';' . PHP_EOL .
 				'$client = new KalturaClient($config);' . PHP_EOL .
 				'$ks = $client->generateSession($adminSecret, $userId, KalturaSessionType::ADMIN, $partnerId);' . PHP_EOL .
 				'$client->setKs($ks);' . PHP_EOL .
@@ -110,9 +110,9 @@
 	$codesample .= PHP_EOL . '$table[] = array("mediaType", "id", "name", "description", "updatedAt", "userId", "download");';
 	$codesample .= PHP_EOL . 'foreach ($filteredListResult->objects as $entry) {';
 	$codesample .= PHP_EOL . '		$row = array();';
-	$codesample .= PHP_EOL . '		//to learn more about thumbnail api see: http://knowledge.kaltura.com/kaltura-thumbnail-api';
+	$codesample .= PHP_EOL . '		//to learn more about thumbnail api see: https://knowledge.kaltura.com/kaltura-thumbnail-api';
 	$codesample .= PHP_EOL . '		//for the default thumbnail, can also use: $entry->thumbnailUrl;';
-	$codesample .= PHP_EOL . '		$row[] = \'<img src="http://cdn.kaltura.com/p/\'.$partnerId.\'/thumbnail/entry_id/\'.$entry->id.\'/width/50/height/50/type/1/quality/100" />\'; ';
+	$codesample .= PHP_EOL . '		$row[] = \'<img src="https://cdn.kaltura.com/p/\'.$partnerId.\'/thumbnail/entry_id/\'.$entry->id.\'/width/50/height/50/type/1/quality/100" />\'; ';
 	$codesample .= PHP_EOL . '		$row[] = $entry->mediaType;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->id;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->name;';
@@ -120,8 +120,8 @@
 	$codesample .= PHP_EOL . '		$row[] = gmdate("m.d.y", $entry->updatedAt);';
 	$codesample .= PHP_EOL . '		$row[] = $entry->userId;';
 	$codesample .= PHP_EOL . '		if ($entry->mediaType == KalturaMediaType::VIDEO || $entry->mediaType == KalturaMediaType::AUDIO) {';
-	$codesample .= PHP_EOL . '			//to learn more about getting download url - http://knowledge.kaltura.com/faq/how-retrieve-download-or-streaming-url-using-api-calls';
-	$codesample .= PHP_EOL . '			$downloadUrl = \'http://www.kaltura.com/p/\'. $partnerId .\'/sp/0/playManifest/entryId/\'. $entry->id .\'/format/url/flavorParamId/0\';';
+	$codesample .= PHP_EOL . '			//to learn more about getting download url - https://knowledge.kaltura.com/faq/how-retrieve-download-or-streaming-url-using-api-calls';
+	$codesample .= PHP_EOL . '			$downloadUrl = \'https://www.kaltura.com/p/\'. $partnerId .\'/sp/0/playManifest/entryId/\'. $entry->id .\'/format/url/flavorParamId/0\';';
 	$codesample .= PHP_EOL . '			$row[] = \'<a href="\'.$downloadUrl.\'" target="_blank">Download</a>\';';
 	$codesample .= PHP_EOL . '		} else {';
 	$codesample .= PHP_EOL . '			$row[] = \'<a href="\'.$entry->dataUrl.\'" target="_blank" class="downloadlink"></a>\';';
@@ -147,7 +147,7 @@
 		$row = array();
 		//to learn more about thumbnail api see: http://knowledge.kaltura.com/kaltura-thumbnail-api
 		//for the default thumbnail, can also use: $entry->thumbnailUrl;
-		$row[] = '<img src="http://cdn.kaltura.com/p/'.$partnerId.'/thumbnail/entry_id/'.$entry->id.'/width/50/height/50/type/1/quality/100" />'; 
+		$row[] = '<img src="https://cdnapisec.kaltura.com/p/'.$partnerId.'/thumbnail/entry_id/'.$entry->id.'/width/50/height/50/type/1/quality/100" />'; 
 		$row[] = '<span class="type type-'.$entry->mediaType.'"></span>';
 		$row[] = $entry->id;
 		$row[] = $entry->name;
@@ -156,7 +156,7 @@
 		$row[] = tep_rewrite_email($entry->userId);
 		if ($entry->mediaType == KalturaMediaType::VIDEO || $entry->mediaType == KalturaMediaType::AUDIO) {
 			//to learn more about getting download url - http://knowledge.kaltura.com/faq/how-retrieve-download-or-streaming-url-using-api-calls
-			$row[] = '<a href="http://www.kaltura.com/p/'.$partnerId.'/sp/0/playManifest/entryId/'.$entry->id.'/format/url/flavorParamId/0" target="_blank" class="downloadlink"></a>';
+			$row[] = '<a href="https://www.kaltura.com/p/'.$partnerId.'/sp/0/playManifest/entryId/'.$entry->id.'/format/url/flavorParamId/0" target="_blank" class="downloadlink"></a>';
 		} else {
 			$row[] = '<a href="'.$entry->dataUrl.'" target="_blank" class="downloadlink"></a>';
 		}
