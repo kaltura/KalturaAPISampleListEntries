@@ -112,7 +112,7 @@
 	$codesample .= PHP_EOL . '		$row = array();';
 	$codesample .= PHP_EOL . '		//to learn more about thumbnail api see: https://knowledge.kaltura.com/kaltura-thumbnail-api';
 	$codesample .= PHP_EOL . '		//for the default thumbnail, can also use: $entry->thumbnailUrl;';
-	$codesample .= PHP_EOL . '		$row[] = \'<img src="https://cdn.kaltura.com/p/\'.$partnerId.\'/thumbnail/entry_id/\'.$entry->id.\'/width/50/height/50/type/1/quality/100" />\'; ';
+	$codesample .= PHP_EOL . '		$row[] = \'<img src="https://cdnapisec.kaltura.com/p/\'.$partnerId.\'/thumbnail/entry_id/\'.$entry->id.\'/width/50/height/50/type/1/quality/100" />\'; ';
 	$codesample .= PHP_EOL . '		$row[] = $entry->mediaType;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->id;';
 	$codesample .= PHP_EOL . '		$row[] = $entry->name;';
